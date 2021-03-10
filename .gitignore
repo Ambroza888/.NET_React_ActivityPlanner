@@ -78,5 +78,6 @@ _[Ss]cripts
 *.dot[Cc]over
 appsettings.json
 appsettings.production.json
+appsettings.Development.json
 key.json
 scratch.cs
