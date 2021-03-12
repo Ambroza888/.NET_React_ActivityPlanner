@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    public class DataContex : DbContext
+    public class DataContext : DbContext
     {
-        public DataContex(DbContextOptions options) : base(options)
+        public DataContext(DbContextOptions options) : base(options)
         {
         }
         public DbSet<Activity> Activities { get; set; }
