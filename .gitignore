@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+*.db
 *.com
 *.class
 *.dll
