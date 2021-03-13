@@ -1,6 +1,8 @@
 ###################
 # compiled source #
 ###################
+*.db-shm
+*.db-wal
 *.db
 *.com
 *.class
