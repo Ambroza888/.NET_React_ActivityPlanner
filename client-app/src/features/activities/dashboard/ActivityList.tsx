@@ -44,7 +44,7 @@ export default observer(function ActivityList() {
               </Item.Extra>
             </Item.Content>
           </Item>
-        ))}
+        ))};
       </Item.Group>
     </Segment>
   );
