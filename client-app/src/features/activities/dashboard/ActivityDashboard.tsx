@@ -13,6 +13,7 @@ export default observer(function ActivityDashboard() {
 
   return (
     <Grid>
+
       <Grid.Column width='10'>
         <ActivityList/>
       </Grid.Column>
@@ -21,6 +22,7 @@ export default observer(function ActivityDashboard() {
         {!editMode && selectedActivity && <ActivityDetails/> }
         {editMode && <ActivityForm/> }
       </GridColumn>
+
     </Grid>
   );
 })
