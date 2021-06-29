@@ -21,11 +21,11 @@ export default class ActivityStore {
   }
 
   loadActivities = async () => {
+    this.loadingInitial = true;
     try {
       const activities = await agent.Activities.list();
       activities.forEach(activity => {
-        activity.date = activity.date.split('T')[0];
-        this.activityRegistry.set(activity.id, activity);
+        this.setActivity(activity);
       });
       this.setLoadingInitial(false);
     } catch (error) {
@@ -34,25 +34,37 @@ export default class ActivityStore {
     }
   }
 
+  private setActivity = (activity:Activity) => {
+    activity.date = activity.date.split('T')[0];
+    this.activityRegistry.set(activity.id, activity);
+  }
+
+  loadActivity = async (id:string) => {
+    let activity = this.getActivity(id);
+    if (activity) {
+      this.selectedActivity = activity;
+    } else {
+      this.loadingInitial = true;
+      try {
+        activity = await agent.Activities.details(id);
+        this.setActivity(activity);
+        runInAction(()=> {
+          this.selectedActivity = activity;
+          this.setLoadingInitial(false);
+        })
+      } catch(err) {
+        console.log(err);
+        this.setLoadingInitial(false);
+      }
+    }
+  }
+
+  private getActivity = (id:string) => {
+    return this.activityRegistry.get(id);
+  }
+
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
-  }
-
-  selectActivity = (id: string) => {
-    this.activityRegistry.get(id);
-  }
-
-  cancelSelectedActivity = () => {
-    this.selectedActivity = undefined;
-  }
-
-  openForm = (id?: string) => {
-    id? this.selectActivity(id) : this.cancelSelectedActivity();
-    this.editMode = true;
-  }
-
-  closeForm = () => {
-    this.editMode = false;
   }
 
   createActivity = async (activity: Activity) => {
@@ -103,9 +115,6 @@ export default class ActivityStore {
 
       runInAction(() => {
         this.activityRegistry.delete(id);
-        if (this.selectedActivity?.id === id) {
-          this.cancelSelectedActivity();
-        }
         this.loading = false;
       })
     } catch (error) {
