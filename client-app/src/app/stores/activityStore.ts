@@ -72,7 +72,6 @@ export default class ActivityStore {
     this.loading = true;
     try {
       await agent.Activities.create(activity);
-
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
         this.selectedActivity = activity;
@@ -91,7 +90,6 @@ export default class ActivityStore {
     this.loading = true;
     try {
       await agent.Activities.update(activity);
-
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
         this.selectedActivity = activity;
@@ -109,10 +107,8 @@ export default class ActivityStore {
 
   deleteActivity = async (id:string) => {
     this.loading = true;
-
     try {
       await agent.Activities.delete(id);
-
       runInAction(() => {
         this.activityRegistry.delete(id);
         this.loading = false;
