@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Button, Header, Segment} from "semantic-ui-react";
 import axios from 'axios';
+import ValidationErrors from './ValidationErrors';
 
 export default function TestErrors() {
-        const baseUrl = 'http://localhost:5000/api/'
+        const baseUrl = 'http://localhost:5000/api/';
+
+        const [errors, setErrors] = useState(null);
 
         function handleNotFound() {
                 axios.get(baseUrl + 'buggy/not-found').catch(err => console.log(err.response));
@@ -17,7 +20,7 @@ export default function TestErrors() {
                 axios.get(baseUrl + 'buggy/server-error').catch(err => console.log(err.response));
         }
 
-        function handleUnauthorised() {
+        function handleUnauthorized() {
                 axios.get(baseUrl + 'buggy/unauthorised').catch(err => console.log(err.response));
         }
 
@@ -26,7 +29,7 @@ export default function TestErrors() {
         }
 
         function handleValidationError() {
-                axios.post(baseUrl + 'activities', {}).catch(err => console.log(err.response));
+                axios.post(baseUrl + 'activities', {}).catch(err => setErrors(err));
         }
 
         return (
@@ -38,10 +41,11 @@ export default function TestErrors() {
                         <Button onClick={handleBadRequest} content='Bad Request' basic primary />
                         <Button onClick={handleValidationError} content='Validation Error' basic primary />
                         <Button onClick={handleServerError} content='Server Error' basic primary />
-                        <Button onClick={handleUnauthorised} content='Unauthorised' basic primary />
+                        <Button onClick={handleUnauthorized} content='Unauthorized' basic primary />
                         <Button onClick={handleBadGuid} content='Bad Guid' basic primary />
                 </Button.Group>
                 </Segment>
+                {errors && <ValidationErrors errors = {errors}/> }
         </>
         )
 }
