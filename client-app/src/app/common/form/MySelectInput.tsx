@@ -16,6 +16,7 @@ export default function MySelectInput(props: Props) {
   return (
     // !!meta.error turns -  {} --> boolean
     <Form.Field error={meta.touched && !!meta.error}>
+
       <label>{props.label}</label>
       <Select
         clearable
