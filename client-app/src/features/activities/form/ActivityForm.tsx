@@ -1,12 +1,16 @@
 import { observer } from 'mobx-react-lite';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Button, FormField, Label, Segment } from 'semantic-ui-react';
+import { Button, Segment } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import MyTextInput from '../../../app/common/form/MyTextInput';
+import MyTextArea from '../../../app/common/form/MyTextArea';
+import MySelectInput from '../../../app/common/form/MySelectInput';
+import { categoryOptions } from '../../../app/common/options/categoryOptions';
 
 export default observer(function ActivityForm() {
   const { activityStore } = useStore();
@@ -32,7 +36,12 @@ export default observer(function ActivityForm() {
   });
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('The activity title is required')
+    title: Yup.string().required('The activity title is required'),
+    description: Yup.string().required('The activity description is required'),
+    category: Yup.string().required(),
+    date: Yup.string().required(),
+    city: Yup.string().required(),
+    venue: Yup.string().required(),
   })
 
   useEffect(() => {
@@ -73,38 +82,17 @@ export default observer(function ActivityForm() {
         onSubmit={values => console.log(values)}>
         {({ handleSubmit }) => (
           <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-            <FormField>
-              <Field placeholder='Title' name='title'/>
-              <ErrorMessage name='title'
-                render={error => <Label basic color='red' content={error} />}
-              />
-            </FormField>
-            <Field
-              placeholder='Description'
-              name='description'
-            />
-            <Field
-              placeholder='Category'
-              name='category'
-            />
-            <Field
-              type='Date'
-              placeholder='Date'
-              name='date'
-            />
-            <Field
-              placeholder='City'
-              name='city'
-            />
-            <Field
-              placeholder='Venue'
-              name='venue'
-            />
+            <MyTextInput name='title' placeholder='Title' />
+            <MyTextArea rows={3} placeholder='Description' name='description' />
+            <MySelectInput options={categoryOptions} placeholder='Category' name='category' />
+            <MyTextInput placeholder='Date' name='date' />
+            <MyTextInput placeholder='City' name='city' />
+            <MyTextInput placeholder='Venue' name='venue' />
 
             <Button
               loading={loading}
-              floated='right'
               positive
+              floated='right'
               type='submit'
               content='Submit'
             />
