@@ -12,6 +12,7 @@ import ActivityDetails from '../../features/activities/details/ActivityDetails';
 import TestErrors from '../../features/errors/TestError';
 import NotFound from '../../features/errors/NotFound';
 import ServerError from '../../features/errors/ServerError';
+import LoginForm from '../../features/users/LoginForm';
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function App() {
                 />
                 <Route path='/errors' component={TestErrors}/>
                 <Route path='/server-error' component={ServerError}/>
+                <Route path='/login' component={LoginForm}/>
                 <Route component={NotFound}/>
               </Switch>
             </Container>
