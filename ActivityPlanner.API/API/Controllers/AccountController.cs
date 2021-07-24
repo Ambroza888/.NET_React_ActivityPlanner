@@ -33,7 +33,7 @@ namespace API.Controllers
 
             if (user == null) return Unauthorized();
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user,loginDto.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (result.Succeeded)
             {
