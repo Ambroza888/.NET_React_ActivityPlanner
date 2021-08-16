@@ -13,10 +13,14 @@ namespace Application.Core
             CreateMap<Activity,ActivityDto>()
                 .ForMember(d => d.HostUsername, opt => opt.MapFrom(src =>
                     src.Attendees.FirstOrDefault(x =>x.IsHost).AppUser.UserName));
-            CreateMap<ActivityAttendee, Profiles.Profile>()
+            CreateMap<ActivityAttendee, AttendeeDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.UserName, o => o.MapFrom(s => s.AppUser.UserName))
-                .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio));
+                .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio))
+                .ForMember(d => d.Image, o => o.MapFrom(src => src.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url));
+            // we are using Profiles.Profile full path because automapper is using Profile class too.
+            CreateMap<AppUser, Profiles.Profile>()
+                .ForMember(d => d.Image, o => o.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url));
         }
     }
 }
