@@ -7,7 +7,7 @@ import { useStore } from '../../app/stores/store';
 import ProfileContent from './ProfileContent';
 import ProfileHeader from './ProfileHeader';
 
-export default observer(function DefaultPage() {
+export default observer(function ProfilePage() {
   const {username} = useParams<{username: string}>();
   const {profileStore} = useStore();
   const {loadProfile, loadingProfile, profile} = profileStore;
