@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+.eslintcache
 *.db-shm
 *.db-wal
 *.db
