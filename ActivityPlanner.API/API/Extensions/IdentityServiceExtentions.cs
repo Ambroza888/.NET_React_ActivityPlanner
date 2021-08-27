@@ -35,6 +35,7 @@ namespace API.Extensions
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
+
                     opt.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>
