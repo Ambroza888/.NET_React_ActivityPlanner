@@ -3,7 +3,7 @@ namespace Application.Core
   public class PagingParams
   {
 
-    private int _pageSize = 2;
+    private int _pageSize = 7;
     private const int MaxPageSize = 30;
     public int PageNumber { get; set; } = 1;
     public int PageSize
