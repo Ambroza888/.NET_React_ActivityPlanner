@@ -47,6 +47,14 @@ namespace Application.Core
                     o => o.MapFrom(src => src.Author.DisplayName))
                 .ForMember(d => d.Image,
                     o => o.MapFrom(src => src.Author.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            CreateMap<ActivityAttendee, Profiles.UserActivityDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(src => src.Activity.Id))
+                .ForMember(d => d.Date, o => o.MapFrom(src => src.Activity.Date))
+                .ForMember(d => d.Title, o => o.MapFrom(src => src.Activity.Title))
+                .ForMember(d => d.Category, o => o.MapFrom(src => src.Activity.Category))
+                .ForMember(d => d.HostUsername, o => o.MapFrom(src =>
+                    src.Activity.Attendees.FirstOrDefault(h => h.IsHost).AppUser.UserName));
         }
     }
 }
