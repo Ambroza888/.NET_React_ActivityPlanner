@@ -1,6 +1,7 @@
 ###################
 # compiled source #
 ###################
+*.env.production
 *.db-shm
 *.db-wal
 *.db
